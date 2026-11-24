@@ -1,75 +1,60 @@
-# React + TypeScript + Vite
+# Windups Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small React app that shows off [windups](https://github.com/sgwilym/windups), a typewriter effect library for React by Sam Gwilym. It types out text one character at a time, and it works on JSX too, so styled and nested elements type out as well.
 
-Currently, two official plugins are available:
+I made this for my class Show and Tell project.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+The app has five demo cards, one for each part of the library:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **useWindupString**: The simplest API. A hook that types out a plain string, with Skip and Replay buttons.
+2. **WindupChildren**: Types out JSX/TSX, including **bold**, *italic*, and custom-styled text.
+3. **Pace & Pause**: Changes the typing speed partway through and adds a pause.
+4. **OnChar, Effect & isPaused**: Runs a callback on every character, fires an effect at a set point, and lets you pause and resume.
+5. **Playground**: Enter your own text and pick the typing speed with a slider.
 
-## Expanding the ESLint configuration
+## Using windups in Your Own Project
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Install the package:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install windups
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+or
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+yarn add windups
 ```
+
+Basic usage with the hook:
+
+```jsx
+import { useWindupString } from "windups";
+
+function Greeting() {
+  const [text] = useWindupString("Hello, world!");
+  return <p>{text}</p>;
+}
+```
+
+Typing out JSX with custom speed and a pause:
+
+```jsx
+import { WindupChildren, Pace, Pause } from "windups";
+
+function Intro() {
+  return (
+    <WindupChildren>
+      <Pace ms={25}>{"I can talk really fast... "}</Pace>
+      <Pause ms={1000} />
+      <Pace ms={200}>{"or reeeally slow."}</Pace>
+    </WindupChildren>
+  );
+}
+```
+
+## Credits
+
+The windups library was created by [Sam Gwilym](https://github.com/sgwilym). I found it on [madewithreactjs.com](https://madewithreactjs.com/windups).
